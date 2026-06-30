@@ -1,0 +1,38 @@
+<section class="checkout-page">
+  <div class="checkout-page_header">
+    <h1>Корзина</h1>
+    <a routerLink="/history" class="checkout-page_history-link">История</a>
+  </div>
+
+  <div *ngIf="(cartItems$ | async)?.length === 0; else cartList" class="checkout-page_empty">
+    <p>Корзина пуста</p>
+  </div>
+
+  <ng-template #cartList>
+    <div class="checkout-items" *ngFor="let item of cartItems$ | async">
+      <div class="checkout-item">
+        <img [src]="item.food.image" [alt]="item.food.name" class="checkout-item_image" />
+
+        <div class="checkout-item_details">
+          <h2>{{ item.food.name }}</h2>
+          <span>{{ item.food.price }} ₽</span>
+        </div>
+
+        <div class="checkout-item_controls">
+          <button type="button" (click)="decrease(item.food.id)">−</button>
+          <span>{{ item.quantity }}</span>
+          <button type="button" (click)="increase(item.food.id)">+</button>
+        </div>
+
+        <button type="button" class="checkout-item_remove" (click)="remove(item.food.id)">Удалить</button>
+      </div>
+    </div>
+
+    <div class="checkout-summary">
+      <span>Итого</span>
+      <strong>{{ total$ | async }} ₽</strong>
+    </div>
+
+    <button type="button" class="checkout-place" (click)="placeOrder()" routerLink="/history">Оформить заказ</button>
+  </ng-template>
+</section>

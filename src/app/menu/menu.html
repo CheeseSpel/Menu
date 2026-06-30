@@ -1,0 +1,31 @@
+<section class="menu-page">
+  <div class="menu-header">
+    <span class="menu-header_badge">Меню</span>
+    <h1>Наши бургеры и дополнения</h1>
+  </div>
+
+  <div class="menu-grid">
+    <article class="menu-card" *ngFor="let item of foods">
+      <img class="menu-card_image" [src]="item.image" [alt]="item.name" />
+
+      <div class="menu-card_content">
+        <span class="menu-card_category">{{ item.category }}</span>
+        <h2>{{ item.name }}</h2>
+        <p>{{ item.description }}</p>
+
+        <div class="menu-card_footer">
+          <span class="menu-card_price">{{ item.price }} ₽</span>
+          <button type="button" class="menu-card_button" (click)="addToCart(item)">
+            В корзину
+          </button>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="menu-cart-link">
+    <a routerLink="/checkout" class="menu-cart-link_button">
+      Корзина ({{ cartCount$ | async }})
+    </a>
+  </div>
+</section>

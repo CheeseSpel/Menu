@@ -1,0 +1,33 @@
+<section class="history-page">
+  <div class="history-page_header">
+    <h1>История покупок</h1>
+    <a routerLink="/menu" class="history-page_link">Вернуться в меню</a>
+  </div>
+
+  <div *ngIf="(history$ | async)?.length === 0; else historyList" class="history-page_empty">
+    <p>Пока нет заказов.</p>
+  </div>
+
+  <ng-template #historyList>
+    <div class="history-list" *ngFor="let order of history$ | async">
+      <article class="history-card">
+        <div class="history-card_top">
+          <span class="history-card_id">Заказ #{{ order.id }}</span>
+          <span class="history-card_date">{{ order.date }}</span>
+        </div>
+
+        <ul class="history-card_items">
+          <li *ngFor="let item of order.items">
+            <span>{{ item.food.name }}</span>
+            <span>{{ item.quantity }} * {{ item.food.price }} ₽</span>
+          </li>
+        </ul>
+
+        <div class="history-card_total">
+          <span>Итого</span>
+          <strong>{{ order.total }} ₽</strong>
+        </div>
+      </article>
+    </div>
+  </ng-template>
+</section>
